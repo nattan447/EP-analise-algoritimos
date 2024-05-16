@@ -1,4 +1,13 @@
-import random 
+import random
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+
+
+
+
+
 n = 50
 V =[random.randint(0,9999) for i in range(n)]
 vsorted = list(V)
@@ -15,6 +24,7 @@ def mediaV(V,n):
     """
     
     u = 0
+
     soma = 0
     while u<n:
         soma += V[u]
@@ -101,9 +111,27 @@ def insetion(V,n):
                 u+= -1
         i+=1
 
-insetion(V,n)
-print(V)
+def counting(V,n):
+    i = 0
+    count = 0
+    maior = V[0]
+    vetorFrequencia = []
+    while i<n:
+        if maior!= V[i] and  maior<V[i]:
+            maior = V[i]
+        i+=1
+    for i in range(maior):
+       vetorFrequencia.append(0)
+    for u in range(n):
+        vetorFrequencia[V[u]-1] += 1
+    for j in range(len(vetorFrequencia)-1):
+        vetorFrequencia[j+1] += vetorFrequencia[j]
+    print(vetorFrequencia)
+\
 
+lis  = [1,4,1,2,7,5,2]
+
+counting(lis,len(lis))
 
 
 
