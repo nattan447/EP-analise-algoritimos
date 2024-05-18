@@ -1,6 +1,6 @@
 import random
-import matplotlib.pyplot as plt
-import numpy as np
+# import matplotlib.pyplot as plt
+# import numpy as np
 
 
 
@@ -8,7 +8,7 @@ import numpy as np
 
 
 
-n = 50
+n = 100
 V =[random.randint(0,9999) for i in range(n)]
 vsorted = list(V)
 # vsorted.sort() #ordena o vetor vsorted
@@ -116,22 +116,54 @@ def counting(V,n):
     count = 0
     maior = V[0]
     vetorFrequencia = []
+    copiaV = [] #vetor que servira de copia de V para não ocorrer alterações indesejaveis em V no meio do algoritimo
     while i<n:
         if maior!= V[i] and  maior<V[i]:
             maior = V[i]
+        copiaV.append(V[i])
         i+=1
     for i in range(maior):
        vetorFrequencia.append(0)
     for u in range(n):
-        vetorFrequencia[V[u]-1] += 1
+        vetorFrequencia[copiaV[u]-1] += 1 # calcula a frequencia que cada elemento aparece
     for j in range(len(vetorFrequencia)-1):
-        vetorFrequencia[j+1] += vetorFrequencia[j]
-    print(vetorFrequencia)
-\
+        vetorFrequencia[j+1] += vetorFrequencia[j] # soma dos elementos vizinhos n1,n2 para obter quantos elementos n elementos são <=n2
+    k = n-1
+    while k>=0:
+        indexelementofinal = vetorFrequencia[copiaV[k]-1] # index que o elemento copiav[k] deve ser posto
+        vetorFrequencia[copiaV[k]-1] += -1
+        V[indexelementofinal-1] = copiaV[k]
+        k+= -1
 
-lis  = [1,4,1,2,7,5,2]
 
-counting(lis,len(lis))
+def embaralha(V,n,p):
+    quantidadePosicoes = (p*n)/100
+    k = 1
+    counter = 0 # counter vai servir para não permutar uma mesma posição
+    iniciposicao = random.randint(0,n-1)
+    inicivalor = V[iniciposicao]
+    while k<=quantidadePosicoes:
+        novaposicRamdom = random.randint(0,n-1)
+   
+        if V[iniciposicao]!=V[novaposicRamdom]:
+            print("permutou    "+str(V[iniciposicao]))
+            print("com    "+ str(V[novaposicRamdom]))
+            V[iniciposicao] = V[novaposicRamdom]
+            V[novaposicRamdom] = inicivalor
+        else :
+            print("não permutou  " +str(V[iniciposicao]))
+            print("com    "+ str(V[novaposicRamdom]))
+
+            # se der o mesmo valor não vão permutar
+            # e vai rodar até permutar
+            k+= -1
+        #basicamente x permuta com algum y para cada iteração
+        iniciposicao = random.randint(0,n-1)
+        inicivalor = V[iniciposicao]
+        k+=1
+    print(V)
+
+embaralha(V,n,100)
 
 
 
