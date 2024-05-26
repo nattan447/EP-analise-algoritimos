@@ -1,6 +1,8 @@
 import random
 # import matplotlib.pyplot as plt
 # import numpy as np
+from sys import platform
+import time as T
 
 
 
@@ -8,10 +10,10 @@ import random
 
 
 
-n = 100
+
+n = 5000
 V =[random.randint(0,9999) for i in range(n)]
-vsorted = list(V)
-# vsorted.sort() #ordena o vetor vsorted
+V2 = [i for i in range(n)]
 def mediaV(V,n):
     """
     Esta função calcula a média de um vetor V
@@ -146,13 +148,13 @@ def embaralha(V,n,p):
         novaposicRamdom = random.randint(0,n-1)
    
         if V[iniciposicao]!=V[novaposicRamdom]:
-            print("permutou    "+str(V[iniciposicao]))
-            print("com    "+ str(V[novaposicRamdom]))
+            # print("permutou    "+str(V[iniciposicao]))
+            # print("com    "+ str(V[novaposicRamdom]))
             V[iniciposicao] = V[novaposicRamdom]
             V[novaposicRamdom] = inicivalor
         else :
-            print("não permutou  " +str(V[iniciposicao]))
-            print("com    "+ str(V[novaposicRamdom]))
+            # print("não permutou  " +str(V[iniciposicao]))
+            # print("com    "+ str(V[novaposicRamdom]))
 
             # se der o mesmo valor não vão permutar
             # e vai rodar até permutar
@@ -161,9 +163,46 @@ def embaralha(V,n,p):
         iniciposicao = random.randint(0,n-1)
         inicivalor = V[iniciposicao]
         k+=1
-    print(V)
-
-embaralha(V,n,100)
+    # print(V)
 
 
+def timeMe(func,V,n,m,p):
+    w = 0
+    tempoarray = []
+    while w<m:
+        print(p)
+        embaralha(V,n,p)
+        start = T.process_time()
+        func(V,n)
+        finish = T.process_time()
+        tempoarray.append(finish-start)
+        if p ==5:
+            p+=5
+        elif p==10:
+            p+=40
+        else:
+            p+=2
+        w+=1
+    print(tempoarray)
+    media = mediaV(tempoarray,m)
+    variancia = varV(tempoarray,m)
+    return media,variancia
 
+
+
+# vsorted = list(V)
+# bubble(vsorted,n)
+# vsorted = list(V)
+# vsorted.sort()
+# vsorted = list(V)
+# selection(vsorted,n)
+# vsorted = list(V)
+# insetion(vsorted,n)
+# vsorted = list(V)
+# counting(vsorted,n)
+# vsorted = list(V)
+vsorted = list(V2)
+timeMe(bubble,vsorted,n,5,1)
+
+
+# print(timeMe(bubble,V,n,2,20))
