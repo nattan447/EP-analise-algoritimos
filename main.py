@@ -1,5 +1,5 @@
 import random
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 # import numpy as np
 from sys import platform
 import time as T
@@ -11,7 +11,7 @@ import time as T
 
 
 
-n = 5000
+n = 1000
 V =[random.randint(0,9999) for i in range(n)]
 V2 = [i for i in range(n)]
 def mediaV(V,n):
@@ -94,7 +94,7 @@ def bubble(V,n):
 
 
 #insertion
-def insetion(V,n):
+def insertion(V,n):
     i = 0
     while i<n-1:
         menor = V[i+1]
@@ -139,55 +139,171 @@ def counting(V,n):
 
 
 def embaralha(V,n,p):
-    quantidadePosicoes = (p*n)/100
-    k = 1
-    counter = 0 # counter vai servir para não permutar uma mesma posição
-    iniciposicao = random.randint(0,n-1)
-    inicivalor = V[iniciposicao]
-    while k<=quantidadePosicoes:
-        novaposicRamdom = random.randint(0,n-1)
-   
-        if V[iniciposicao]!=V[novaposicRamdom]:
-            # print("permutou    "+str(V[iniciposicao]))
-            # print("com    "+ str(V[novaposicRamdom]))
-            V[iniciposicao] = V[novaposicRamdom]
-            V[novaposicRamdom] = inicivalor
-        else :
-            # print("não permutou  " +str(V[iniciposicao]))
-            # print("com    "+ str(V[novaposicRamdom]))
-
-            # se der o mesmo valor não vão permutar
-            # e vai rodar até permutar
-            k+= -1
-        #basicamente x permuta com algum y para cada iteração
+    if p>0:
+        quantidadePosicoes = (p*n)/100
+        k = 1
+        counter = 0 # counter vai servir para não permutar uma mesma posição
         iniciposicao = random.randint(0,n-1)
         inicivalor = V[iniciposicao]
-        k+=1
+        while k<=quantidadePosicoes:
+            print("ola")
+            novaposicRamdom = random.randint(0,n-1)
+   
+            if V[iniciposicao]!=V[novaposicRamdom]:
+                # print("permutou    "+str(V[iniciposicao]))
+                # print("com    "+ str(V[novaposicRamdom]))
+                V[iniciposicao] = V[novaposicRamdom]
+                V[novaposicRamdom] = inicivalor
+            else :
+                # print("não permutou  " +str(V[iniciposicao]))
+                # print("com    "+ str(V[novaposicRamdom]))
+
+                # se der o mesmo valor não vão permutar
+                # e vai rodar até permutar
+                k+= -1
+            #basicamente x permuta com algum y para cada iteração
+            iniciposicao = random.randint(0,n-1)
+            inicivalor = V[iniciposicao]
+            k+=1
     # print(V)
 
 
 def timeMe(func,V,n,m,p):
     w = 0
     tempoarray = []
-    while w<m:
-        print(p)
+    while w<m :
         embaralha(V,n,p)
         start = T.process_time()
+        
         func(V,n)
         finish = T.process_time()
         tempoarray.append(finish-start)
-        if p ==5:
-            p+=5
-        elif p==10:
-            p+=40
-        else:
-            p+=2
         w+=1
-    print(tempoarray)
     media = mediaV(tempoarray,m)
     variancia = varV(tempoarray,m)
     return media,variancia
 
+
+
+
+
+sortpythonmedia = []
+sortpythonvariancia = []
+seleciotnmedia = []
+selectionvariancia = []
+insertionmedia = []
+insertionvariancia =  []
+countingmedia = [ ]
+countingvariancia = []
+bublemedia = []
+bublevarianciamedia =  []
+
+vsorted = list(V)
+bublemedia.append(timeMe(bubble,vsorted,n,10,0)[0])
+bublevarianciamedia.append(timeMe(bubble,vsorted,n,10,0)[1])
+vsorted = list(V)
+countingmedia.append(timeMe(counting,vsorted,n,10,0)[0])
+countingvariancia.append(timeMe(counting,vsorted,n,10,0)[1])
+vsorted = list(V)
+insertionmedia.append(timeMe(insertion,vsorted,n,10,0)[0])
+insertionvariancia.append(timeMe(insertion,vsorted,n,10,0)[1])
+vsorted = list(V)
+seleciotnmedia.append(timeMe(selection,vsorted,n,10,0)[0])
+selectionvariancia.append(timeMe(selection,vsorted,n,10,0)[1])
+vsorted = list(V)
+seleciotnmedia.append(timeMe(selection,vsorted,n,10,0)[0])
+selectionvariancia.append(timeMe(selection,vsorted,n,10,0)[1])
+n= 5000
+
+
+V = [random.randint(0,9999) for i in range(n)]
+vsorted = list(V)
+bublemedia.append(timeMe(bubble,vsorted,n,10,0)[0])
+bublevarianciamedia.append(timeMe(bubble,vsorted,n,10,0)[1])
+vsorted = list(V)
+countingmedia.append(timeMe(counting,vsorted,n,10,0)[0])
+countingvariancia.append(timeMe(counting,vsorted,n,10,0)[1])
+vsorted = list(V)
+insertionmedia.append(timeMe(insertion,vsorted,n,10,0)[0])
+insertionvariancia.append(timeMe(insertion,vsorted,n,10,0)[1])
+vsorted = list(V)
+seleciotnmedia.append(timeMe(selection,vsorted,n,10,0)[0])
+selectionvariancia.append(timeMe(selection,vsorted,n,10,0)[1])
+vsorted = list(V)
+seleciotnmedia.append(timeMe(selection,vsorted,n,10,0)[0])
+selectionvariancia.append(timeMe(selection,vsorted,n,10,0)[1])
+
+
+
+
+n = 10000
+V = [random.randint(0,9999) for i in range(n)]
+vsorted = list(V)
+bublemedia.append(timeMe(bubble,vsorted,n,10,0)[0])
+bublevarianciamedia.append(timeMe(bubble,vsorted,n,10,0)[1])
+vsorted = list(V)
+countingmedia.append(timeMe(counting,vsorted,n,10,0)[0])
+countingvariancia.append(timeMe(counting,vsorted,n,10,0)[1])
+vsorted = list(V)
+insertionmedia.append(timeMe(insertion,vsorted,n,10,0)[0])
+insertionvariancia.append(timeMe(insertion,vsorted,n,10,0)[1])
+vsorted = list(V)
+seleciotnmedia.append(timeMe(selection,vsorted,n,10,0)[0])
+selectionvariancia.append(timeMe(selection,vsorted,n,10,0)[1])
+vsorted = list(V)
+seleciotnmedia.append(timeMe(selection,vsorted,n,10,0)[0])
+selectionvariancia.append(timeMe(selection,vsorted,n,10,0)[1])
+
+
+n = 50000
+
+V = [random.randint(0,9999) for i in range(n)]
+vsorted = list(V)
+bublemedia.append(timeMe(bubble,vsorted,n,10,0)[0])
+bublevarianciamedia.append(timeMe(bubble,vsorted,n,10,0)[1])
+vsorted = list(V)
+countingmedia.append(timeMe(counting,vsorted,n,10,0)[0])
+countingvariancia.append(timeMe(counting,vsorted,n,10,0)[1])
+vsorted = list(V)
+insertionmedia.append(timeMe(insertion,vsorted,n,10,0)[0])
+insertionvariancia.append(timeMe(insertion,vsorted,n,10,0)[1])
+vsorted = list(V)
+seleciotnmedia.append(timeMe(selection,vsorted,n,10,0)[0])
+selectionvariancia.append(timeMe(selection,vsorted,n,10,0)[1])
+vsorted = list(V)
+seleciotnmedia.append(timeMe(selection,vsorted,n,10,0)[0])
+selectionvariancia.append(timeMe(selection,vsorted,n,10,0)[1])
+
+n = 100000
+
+V = [random.randint(0,9999) for i in range(n)]
+vsorted = list(V)
+bublemedia.append(timeMe(bubble,vsorted,n,10,0)[0])
+bublevarianciamedia.append(timeMe(bubble,vsorted,n,10,0)[1])
+vsorted = list(V)
+countingmedia.append(timeMe(counting,vsorted,n,10,0)[0])
+countingvariancia.append(timeMe(counting,vsorted,n,10,0)[1])
+vsorted = list(V)
+insertionmedia.append(timeMe(insertion,vsorted,n,10,0)[0])
+insertionvariancia.append(timeMe(insertion,vsorted,n,10,0)[1])
+vsorted = list(V)
+seleciotnmedia.append(timeMe(selection,vsorted,n,10,0)[0])
+selectionvariancia.append(timeMe(selection,vsorted,n,10,0)[1])
+vsorted = list(V)
+seleciotnmedia.append(timeMe(selection,vsorted,n,10,0)[0])
+selectionvariancia.append(timeMe(selection,vsorted,n,10,0)[1])
+
+def GraficaSortings(mpontos,mediaMCMPi,desvioMCMPi):
+    plt.errorbar(mpontos,mediaMCMPi,desvioMCMPi,fmt='o')
+    plt.show()
+    print("ola mundo")
+
+
+
+listamedias = [seleciotnmedia,bublemedia,countingmedia,insertionmedia ]
+listavariancias = [selectionvariancia,bublevarianciamedia,countingvariancia,insertionvariancia]
+
+GraficaSortings([2,4,6,8],listamedias,listavariancias)
 
 
 # vsorted = list(V)
@@ -201,8 +317,13 @@ def timeMe(func,V,n,m,p):
 # vsorted = list(V)
 # counting(vsorted,n)
 # vsorted = list(V)
-vsorted = list(V2)
-timeMe(bubble,vsorted,n,5,1)
 
 
 # print(timeMe(bubble,V,n,2,20))
+
+
+
+
+
+
+
