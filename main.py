@@ -11,58 +11,38 @@ import time as T
 
 
 
-n = 1000
+n = 100
 V =[random.randint(0,9999) for i in range(n)]
 V2 = [i for i in range(n)]
-def mediaV(V,n):
-    """
-    Esta função calcula a média de um vetor V
-    
-    Args :
-    V(list): O vetor que servira de base para a média.
-    n(int): O numero de elementos do vetor
-
-    Returns : int: A média dos n elementos do vetor
-    """
-    
-    u = 0
-
-    soma = 0
-    while u<n:
-        soma += V[u]
-        u+=1
-    return soma/n 
 
 
-#variancia 
-def varV(V,n):
-    """
-    Esta função calcula a variância do vetor V
-    Args :
-     V(list): O vetor que servira de base para a média.
-     n(int): O numero de elementos do vetor
-     
-     Returns : 
-     int: A  variação dos valores do vetor V    
-    """
-    media=mediaV(V,n) # retorna a média dos valores do vetor
-    print("média "+ str(media))
-    desvio = [] #vetor para guardar valores de variação
-    i = 0
-    variacao = 0 # ira guardar o valor da variação
-    while i<n:
-        if media>V[i]:
-            subtracao = media-V[i]
-            desvio.append(subtracao)
-        else:
-            subtracao = V[i]-media
-            desvio.append(subtracao)
-        i+=1
-    u = 0
-    while u<n:
-        variacao += (desvio[u]*desvio[u])/n# calcula o desvio padrão
-        u+=1
-    return variacao #retorna a variação
+def mediaT(T, n):
+        """
+        Esta função calcula a média de um vetor V
+
+        Args :
+        V   (list): O vetor que servira de base para a média.
+        n(int): O numero de elementos do vetor
+
+        Returns : int: A média dos n elementos do vetor
+        """
+        soma = 0
+        for valor in T:
+            soma += valor
+        media = soma / n
+        return media
+
+
+
+#variancia
+def varT(T, n):
+    media = mediaT(T, n)
+    soma_diferencas_quadradas = 0
+    for valor in T:
+        soma_diferencas_quadradas += (valor - media) ** 2
+    variancia = soma_diferencas_quadradas / n
+    return variancia
+
 
 
 #selection sort
@@ -137,6 +117,9 @@ def counting(V,n):
         V[indexelementofinal-1] = copiaV[k]
         k+= -1
 
+def sortPy (V,n):
+    V.sort()
+
 
 def embaralha(V,n,p):
     if p>0:
@@ -148,7 +131,7 @@ def embaralha(V,n,p):
         while k<=quantidadePosicoes:
             print("ola")
             novaposicRamdom = random.randint(0,n-1)
-   
+
             if V[iniciposicao]!=V[novaposicRamdom]:
                 # print("permutou    "+str(V[iniciposicao]))
                 # print("com    "+ str(V[novaposicRamdom]))
@@ -167,6 +150,7 @@ def embaralha(V,n,p):
             k+=1
     # print(V)
 
+c = 0
 
 def timeMe(func,V,n,m,p):
     w = 0
@@ -174,14 +158,43 @@ def timeMe(func,V,n,m,p):
     while w<m :
         embaralha(V,n,p)
         start = T.process_time()
-        
         func(V,n)
+        
         finish = T.process_time()
         tempoarray.append(finish-start)
+    
         w+=1
-    media = mediaV(tempoarray,m)
-    variancia = varV(tempoarray,m)
+    global c
+    c+=1
+    print(c)
+    media = mediaT(tempoarray,m)
+    variancia = varT(tempoarray,m)
     return media,variancia
+
+
+
+
+def callalgorithims(V):
+    vsorted = list(V)
+    resultado = timeMe(bubble,vsorted,n,10,0)
+    bublemedia.append(resultado[0])
+    bublevarianciamedia.append(resultado[1])
+    vsorted = list(V)
+    resultado = timeMe(counting,vsorted,n,10,0)
+    countingmedia.append(resultado[0])
+    countingvariancia.append(resultado[1])
+    vsorted = list(V)
+    resultado = timeMe(insertion,vsorted,n,10,0)
+    insertionmedia.append(resultado[0])
+    insertionvariancia.append(resultado[1])
+    vsorted = list(V)
+    resultado = timeMe(selection,vsorted,n,10,0)
+    seleciotnmedia.append(resultado[0])
+    selectionvariancia.append(resultado[1])
+    vsorted = list(V)
+    resultado = timeMe(sortPy,vsorted,n,10,0)
+    sortpythonmedia.append(resultado[0])
+    sortpythonvariancia.append(resultado[1])
 
 
 
@@ -198,113 +211,56 @@ countingvariancia = []
 bublemedia = []
 bublevarianciamedia =  []
 
-vsorted = list(V)
-bublemedia.append(timeMe(bubble,vsorted,n,10,0)[0])
-bublevarianciamedia.append(timeMe(bubble,vsorted,n,10,0)[1])
-vsorted = list(V)
-countingmedia.append(timeMe(counting,vsorted,n,10,0)[0])
-countingvariancia.append(timeMe(counting,vsorted,n,10,0)[1])
-vsorted = list(V)
-insertionmedia.append(timeMe(insertion,vsorted,n,10,0)[0])
-insertionvariancia.append(timeMe(insertion,vsorted,n,10,0)[1])
-vsorted = list(V)
-seleciotnmedia.append(timeMe(selection,vsorted,n,10,0)[0])
-selectionvariancia.append(timeMe(selection,vsorted,n,10,0)[1])
-vsorted = list(V)
-seleciotnmedia.append(timeMe(selection,vsorted,n,10,0)[0])
-selectionvariancia.append(timeMe(selection,vsorted,n,10,0)[1])
-n= 5000
+callalgorithims(V)
+
+n=500
 
 
 V = [random.randint(0,9999) for i in range(n)]
-vsorted = list(V)
-bublemedia.append(timeMe(bubble,vsorted,n,10,0)[0])
-bublevarianciamedia.append(timeMe(bubble,vsorted,n,10,0)[1])
-vsorted = list(V)
-countingmedia.append(timeMe(counting,vsorted,n,10,0)[0])
-countingvariancia.append(timeMe(counting,vsorted,n,10,0)[1])
-vsorted = list(V)
-insertionmedia.append(timeMe(insertion,vsorted,n,10,0)[0])
-insertionvariancia.append(timeMe(insertion,vsorted,n,10,0)[1])
-vsorted = list(V)
-seleciotnmedia.append(timeMe(selection,vsorted,n,10,0)[0])
-selectionvariancia.append(timeMe(selection,vsorted,n,10,0)[1])
-vsorted = list(V)
-seleciotnmedia.append(timeMe(selection,vsorted,n,10,0)[0])
-selectionvariancia.append(timeMe(selection,vsorted,n,10,0)[1])
+callalgorithims(V)
 
 
 
 
-n = 10000
+
+n = 1000
 V = [random.randint(0,9999) for i in range(n)]
-vsorted = list(V)
-bublemedia.append(timeMe(bubble,vsorted,n,10,0)[0])
-bublevarianciamedia.append(timeMe(bubble,vsorted,n,10,0)[1])
-vsorted = list(V)
-countingmedia.append(timeMe(counting,vsorted,n,10,0)[0])
-countingvariancia.append(timeMe(counting,vsorted,n,10,0)[1])
-vsorted = list(V)
-insertionmedia.append(timeMe(insertion,vsorted,n,10,0)[0])
-insertionvariancia.append(timeMe(insertion,vsorted,n,10,0)[1])
-vsorted = list(V)
-seleciotnmedia.append(timeMe(selection,vsorted,n,10,0)[0])
-selectionvariancia.append(timeMe(selection,vsorted,n,10,0)[1])
-vsorted = list(V)
-seleciotnmedia.append(timeMe(selection,vsorted,n,10,0)[0])
-selectionvariancia.append(timeMe(selection,vsorted,n,10,0)[1])
+callalgorithims(V)
 
 
-n = 50000
+n = 2000
 
 V = [random.randint(0,9999) for i in range(n)]
-vsorted = list(V)
-bublemedia.append(timeMe(bubble,vsorted,n,10,0)[0])
-bublevarianciamedia.append(timeMe(bubble,vsorted,n,10,0)[1])
-vsorted = list(V)
-countingmedia.append(timeMe(counting,vsorted,n,10,0)[0])
-countingvariancia.append(timeMe(counting,vsorted,n,10,0)[1])
-vsorted = list(V)
-insertionmedia.append(timeMe(insertion,vsorted,n,10,0)[0])
-insertionvariancia.append(timeMe(insertion,vsorted,n,10,0)[1])
-vsorted = list(V)
-seleciotnmedia.append(timeMe(selection,vsorted,n,10,0)[0])
-selectionvariancia.append(timeMe(selection,vsorted,n,10,0)[1])
-vsorted = list(V)
-seleciotnmedia.append(timeMe(selection,vsorted,n,10,0)[0])
-selectionvariancia.append(timeMe(selection,vsorted,n,10,0)[1])
+callalgorithims(V)
 
-n = 100000
 
+n = 6000
+
+print("TA NOS CEM MIL")
 V = [random.randint(0,9999) for i in range(n)]
-vsorted = list(V)
-bublemedia.append(timeMe(bubble,vsorted,n,10,0)[0])
-bublevarianciamedia.append(timeMe(bubble,vsorted,n,10,0)[1])
-vsorted = list(V)
-countingmedia.append(timeMe(counting,vsorted,n,10,0)[0])
-countingvariancia.append(timeMe(counting,vsorted,n,10,0)[1])
-vsorted = list(V)
-insertionmedia.append(timeMe(insertion,vsorted,n,10,0)[0])
-insertionvariancia.append(timeMe(insertion,vsorted,n,10,0)[1])
-vsorted = list(V)
-seleciotnmedia.append(timeMe(selection,vsorted,n,10,0)[0])
-selectionvariancia.append(timeMe(selection,vsorted,n,10,0)[1])
-vsorted = list(V)
-seleciotnmedia.append(timeMe(selection,vsorted,n,10,0)[0])
-selectionvariancia.append(timeMe(selection,vsorted,n,10,0)[1])
+callalgorithims(V)
 
-def GraficaSortings(mpontos,mediaMCMPi,desvioMCMPi):
-    plt.errorbar(mpontos,mediaMCMPi,desvioMCMPi,fmt='o')
+
+
+
+def GraficaSortings(mpontos, mediaMCMPi, desvioMCMPi):
+    for media, desvio ,algoritimo in zip(mediaMCMPi, desvioMCMPi,algoritmos):
+        plt.errorbar(mpontos, media, yerr=desvio, fmt='-',label = algoritimo)
+    plt.legend()
     plt.show()
-    print("ola mundo")
+    print("Olá mundo")
 
 
 
-listamedias = [seleciotnmedia,bublemedia,countingmedia,insertionmedia ]
-listavariancias = [selectionvariancia,bublevarianciamedia,countingvariancia,insertionvariancia]
 
-GraficaSortings([2,4,6,8],listamedias,listavariancias)
+listamedias = [seleciotnmedia,bublemedia,countingmedia,insertionmedia,sortpythonmedia ]
+listavariancias = [selectionvariancia,bublevarianciamedia,countingvariancia,insertionvariancia,sortpythonvariancia]
+algoritmos = ['Selection', 'Bubble', 'Counting', 'Insertion','sortpython']
 
+
+
+
+GraficaSortings([5, 10, 100, 500,1000], listamedias, listavariancias,)
 
 # vsorted = list(V)
 # bubble(vsorted,n)
