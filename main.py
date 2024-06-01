@@ -11,10 +11,8 @@ import time as T
 
 
 
-n = 100
+n = 10
 V =[random.randint(0,9999) for i in range(n)]
-V2 = [i for i in range(n)]
-
 
 def mediaT(T, n):
         """
@@ -65,7 +63,7 @@ def bubble(V,n):
         u = 0
         while u<n-1:
             maior = V[u+1]
-            if V[u]>maior:
+            if V[u]>V[u+1]:
                 #coloca o elemento maior na frente do menor, para cada comparação de 2 a 2
                 V[u+1]= V[u]
                 V[u] = maior
@@ -122,14 +120,13 @@ def sortPy (V,n):
 
 
 def embaralha(V,n,p):
-    if p>0:
+    if p>=1:
         quantidadePosicoes = (p*n)/100
         k = 1
         counter = 0 # counter vai servir para não permutar uma mesma posição
         iniciposicao = random.randint(0,n-1)
         inicivalor = V[iniciposicao]
         while k<=quantidadePosicoes:
-            print("ola")
             novaposicRamdom = random.randint(0,n-1)
 
             if V[iniciposicao]!=V[novaposicRamdom]:
@@ -149,57 +146,64 @@ def embaralha(V,n,p):
             inicivalor = V[iniciposicao]
             k+=1
     # print(V)
+                
 
-c = 0
+contador = 0
 
 def timeMe(func,V,n,m,p):
     w = 0
+    global contador
     tempoarray = []
     while w<m :
-        embaralha(V,n,p)
+        vsorted = list(V)
+        embaralha(vsorted,n,p)
         start = T.process_time()
         func(V,n)
-        
         finish = T.process_time()
         tempoarray.append(finish-start)
     
         w+=1
-    global c
-    c+=1
-    print(c)
     media = mediaT(tempoarray,m)
     variancia = varT(tempoarray,m)
+    contador+=1
+    print(contador)
     return media,variancia
 
 
 
 
-def callalgorithims(V):
+
+
+#experimento 1
+def callalgorithims(V,n,p):
+    print("porcentagem "+str(p))
     vsorted = list(V)
-    resultado = timeMe(bubble,vsorted,n,10,0)
+    resultado = timeMe(bubble,vsorted,n,10,p)
     bublemedia.append(resultado[0])
     bublevarianciamedia.append(resultado[1])
     vsorted = list(V)
-    resultado = timeMe(counting,vsorted,n,10,0)
+    resultado = timeMe(counting,vsorted,n,10,p)
     countingmedia.append(resultado[0])
     countingvariancia.append(resultado[1])
     vsorted = list(V)
-    resultado = timeMe(insertion,vsorted,n,10,0)
+    resultado = timeMe(insertion,vsorted,n,10,p)
     insertionmedia.append(resultado[0])
     insertionvariancia.append(resultado[1])
     vsorted = list(V)
-    resultado = timeMe(selection,vsorted,n,10,0)
+    resultado = timeMe(selection,vsorted,n,10,p)
     seleciotnmedia.append(resultado[0])
     selectionvariancia.append(resultado[1])
     vsorted = list(V)
-    resultado = timeMe(sortPy,vsorted,n,10,0)
+    resultado = timeMe(sortPy,vsorted,n,10,p)
     sortpythonmedia.append(resultado[0])
     sortpythonvariancia.append(resultado[1])
+  
 
 
 
 
 
+sortpythonmedia = []
 sortpythonmedia = []
 sortpythonvariancia = []
 seleciotnmedia = []
@@ -210,44 +214,45 @@ countingmedia = [ ]
 countingvariancia = []
 bublemedia = []
 bublevarianciamedia =  []
+callalgorithims(V,n,0)
+n= 50
+V = [random.randint(0,9999) for i in range(n)]
+callalgorithims(V,n,0)
 
-callalgorithims(V)
 
-n=500
 
+
+
+n = 100
+V = [random.randint(0,9999) for i in range(n)]
+callalgorithims(V,n,0)
+
+
+n = 500
 
 V = [random.randint(0,9999) for i in range(n)]
-callalgorithims(V)
-
-
-
+callalgorithims(V,n,0)
 
 
 n = 1000
-V = [random.randint(0,9999) for i in range(n)]
-callalgorithims(V)
-
-
-n = 2000
-
-V = [random.randint(0,9999) for i in range(n)]
-callalgorithims(V)
-
-
-n = 6000
 
 print("TA NOS CEM MIL")
 V = [random.randint(0,9999) for i in range(n)]
-callalgorithims(V)
+callalgorithims(V,n,0)
 
 
-
+titulo = "grafico de tempo levado de ordenação para cada algoritimo"
+xtitulo = "tamanhos"
 
 def GraficaSortings(mpontos, mediaMCMPi, desvioMCMPi):
     for media, desvio ,algoritimo in zip(mediaMCMPi, desvioMCMPi,algoritmos):
-        plt.errorbar(mpontos, media, yerr=desvio, fmt='-',label = algoritimo)
+        plt.errorbar(mpontos, media, yerr=desvio, fmt='o-',label = algoritimo)
+    plt.xlabel(xtitulo)
+    plt.ylabel("tempo(s)")
     plt.legend()
+    plt.title(titulo)
     plt.show()
+    plt.clf()
     print("Olá mundo")
 
 
@@ -255,27 +260,54 @@ def GraficaSortings(mpontos, mediaMCMPi, desvioMCMPi):
 
 listamedias = [seleciotnmedia,bublemedia,countingmedia,insertionmedia,sortpythonmedia ]
 listavariancias = [selectionvariancia,bublevarianciamedia,countingvariancia,insertionvariancia,sortpythonvariancia]
-algoritmos = ['Selection', 'Bubble', 'Counting', 'Insertion','sortpython']
+algoritmos = ['Selection', 'Bubble', 'Counting', 'Insertion','sort']
+
+GraficaSortings([1000, 5000, 10000, 50000,100000], listamedias, listavariancias,)
 
 
 
 
-GraficaSortings([5, 10, 100, 500,1000], listamedias, listavariancias,)
-
-# vsorted = list(V)
-# bubble(vsorted,n)
-# vsorted = list(V)
-# vsorted.sort()
-# vsorted = list(V)
-# selection(vsorted,n)
-# vsorted = list(V)
-# insetion(vsorted,n)
-# vsorted = list(V)
-# counting(vsorted,n)
-# vsorted = list(V)
 
 
-# print(timeMe(bubble,V,n,2,20))
+
+
+#experimento 2
+
+
+
+
+
+
+# sortpythonmedia = []
+# sortpythonmedia = []
+# sortpythonvariancia = []
+# seleciotnmedia = []
+# selectionvariancia = []
+# insertionmedia = []
+# insertionvariancia =  []
+# countingmedia = [ ]
+# countingvariancia = []
+# bublemedia = []
+# bublevarianciamedia =  []
+
+
+
+# titulo = "grafico de tempo levado de ordenação para cada algoritimo com p% desordenação"
+# xtitulo  ="porcentagem de desordenação"
+# n  = 100000
+# V =[i for i in range(n)]
+# callalgorithims(V,n,1)
+# callalgorithims(V,n,3)
+# callalgorithims(V,n,5)
+# callalgorithims(V,n,10)
+# callalgorithims(V,n,50)
+# listamedias = [bublemedia,insertionmedia,sortpythonmedia ]
+# listavariancias = [bublevarianciamedia,insertionvariancia,sortpythonvariancia]
+# algoritmos = [ 'Bubble', 'Insertion','sortpython']
+# GraficaSortings([1, 3, 5, 10,50], listamedias, listavariancias,)
+
+
+
 
 
 
