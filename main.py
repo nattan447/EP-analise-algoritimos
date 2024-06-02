@@ -281,7 +281,6 @@ def GraficaSortings(mpontos, mediaMCMPi, desvioMCMPi):
     plt.legend()
     plt.title(titulo)
     plt.savefig(nomegif)
-    plt.show()
     plt.clf()
     print("Olá mundo")
 
@@ -292,7 +291,7 @@ listamedias = [seleciotnmedia,bublemedia,countingmedia,insertionmedia,sortpython
 listavariancias = [selectionvariancia,bublevarianciamedia,countingvariancia,insertionvariancia,sortpythonvariancia]
 algoritmos = ['Selection', 'Bubble', 'Counting', 'Insertion','timsort']
 
-# GraficaSortings([[1000,5000,10000,50000,100000],[1000,5000,10000,50000,100000],[1000,5000,10000,50000,100000],[1000,5000,10000,50000,100000],[1000,5000,10000,50000,100000]], listamedias, listavariancias,)
+GraficaSortings([[1000,5000,10000,50000,100000],[1000,5000,10000,50000,100000],[1000,5000,10000,50000,100000],[1000,5000,10000,50000,100000],[1000,5000,10000,50000,100000]], listamedias, listavariancias,)
 
 
 
