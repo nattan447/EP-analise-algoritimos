@@ -11,8 +11,8 @@ import math
 
 
 
-n = 1000
-V =[random.randint(0,9999) for i in range(n)]
+#n = 1000
+#V =[random.randint(0,9999) for i in range(n)]
 
 def mediaT(T, n):
         """     
@@ -204,6 +204,7 @@ def timeMe(func,V,n,m,p):
 
 
 #experimento 1
+''''
 def callalgorithims(V,n,p):
     print("porcentagem "+str(p))
     vsorted = list(V)
@@ -273,7 +274,7 @@ n = 100000
 print("TA NOS CEM MIL")
 V = [random.randint(0,9999) for i in range(n)]
 callalgorithims(V,n,0)
-
+'''
 
 titulo = "grafico de tempo levado de ordenação para cada algoritimo"
 xtitulo = "tamanhos"
@@ -298,11 +299,11 @@ def GraficaSortings(mpontos, mediaMCMPi, desvioMCMPi):
 
 
 
-listamedias = [seleciotnmedia,bublemedia,countingmedia,insertionmedia,sortpythonmedia ]
-listadesviopadrao = [selectionvariancia,bublevarianciamedia,countingvariancia,insertionvariancia,sortpythonvariancia]
-algoritmos = ['Selection', 'Bubble', 'Counting', 'Insertion','timsort']
+#listamedias = [seleciotnmedia,bublemedia,countingmedia,insertionmedia,sortpythonmedia ]
+#listadesviopadrao = [selectionvariancia,bublevarianciamedia,countingvariancia,insertionvariancia,sortpythonvariancia]
+#lgoritmos = ['Selection', 'Bubble', 'Counting', 'Insertion','timsort']
 
-GraficaSortings([[1000,5000,10000,50000,100000],[1000,5000,10000,50000,100000],[1000,5000,10000,50000,100000],[1000,5000,10000,50000,100000],[1000,5000,10000,50000,100000]], listamedias, listadesviopadrao,)
+#GraficaSortings([[1000,5000,10000,50000,100000],[1000,5000,10000,50000,100000],[1000,5000,10000,50000,100000],[1000,5000,10000,50000,100000],[1000,5000,10000,50000,100000]], listamedias, listadesviopadrao,)
 
 
 
@@ -312,7 +313,7 @@ GraficaSortings([[1000,5000,10000,50000,100000],[1000,5000,10000,50000,100000],[
 
 
 #experimento 2
-'''
+
 sortpythonmedia = []
 sortpythonvariancia = []
 insertionmedia = []
@@ -363,7 +364,7 @@ listadesviopadrao = [bublevarianciamedia,insertionvariancia,sortpythonvariancia]
 print("desivo padrao"+str(listadesviopadrao))
 algoritmos = [ 'Bubble', 'Insertion','timsort']
 GraficaSortings([[1,3,5,10,50],[1,3,5,10,50],[1,3,5,10,50]], listamedias, listadesviopadrao,)
-'''
+
 
 
 
