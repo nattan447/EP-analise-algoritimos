@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from sys import platform
 import time as T
 
-
+import math
 
 
 
@@ -15,7 +15,7 @@ n = 1000
 V =[random.randint(0,9999) for i in range(n)]
 
 def mediaT(T, n):
-        """
+        """     
         Esta função calcula a média de um vetor V
 
         Args :
@@ -33,7 +33,7 @@ def mediaT(T, n):
 
 
 #variancia
-def varT(V,n):
+def varT(T,n):
     """
     Esta função calcula a variância do vetor V
     Args :
@@ -43,22 +43,22 @@ def varT(V,n):
      Returns : 
      int: A  variação dos valores do vetor V    
     """
-    media=mediaT(V,n) # retorna a média dos valores do vetor
+    media=mediaT(T,n) # retorna a média dos valores do vetor
     print("média "+ str(media))
-    desvio = [] #vetor para guardar valores de variação
+    desvio = [] #vetor para guardar valores de desvio
     i = 0
     variacao = 0 # ira guardar o valor da variação
     while i<n:
-        if media>V[i]:
-            subtracao = media-V[i]
+        if media>T[i]:
+            subtracao = media-T[i]
             desvio.append(subtracao)
         else:
-            subtracao = V[i]-media
+            subtracao = T[i]-media
             desvio.append(subtracao)
         i+=1
     u = 0
     while u<n:
-        variacao += (desvio[u]*desvio[u])/n# calcula o desvio padrão
+        variacao += (desvio[u]*desvio[u])/n# calcula a variacaO
         u+=1
     return variacao #retorna a variação
 
@@ -78,18 +78,17 @@ def selection(V,n):
         i+=1
 
 #bubble sort
-def bubble(V,n):
-    i = 0
-    while i<n:
-        u = 0
-        while u<n-1:
-            maior = V[u+1]
-            if V[u]>V[u+1]:
-                #coloca o elemento maior na frente do menor, para cada comparação de 2 a 2
-                V[u+1]= V[u]
-                V[u] = maior
-            u+=1
-        i+=1
+def bubble(V, n):
+    for i in range(n):
+        trocou = False
+        for j in range(n - 1):
+            if V[j] > V[j + 1]:
+                trocou = True
+                # Troca os elementos de lugar se estiverem fora de ordem
+                V[j], V[j + 1] = V[j + 1], V[j]
+        if trocou==False:
+            break
+                        
 
 
 #insertion
@@ -139,9 +138,10 @@ def counting(V,n):
 def sortPy (V,n):
     V.sort()
 
+contador = 0
 
 def embaralha(V,n,p):
-    contador = 0
+    
     if p>=1:
         print("comço a embaralha")
         quantidadePosicoes = (p*n)/100
@@ -151,8 +151,6 @@ def embaralha(V,n,p):
         inicivalor = V[iniciposicao]
         while k<=quantidadePosicoes:
             novaposicRamdom = random.randint(0,n-1)
-            contador+=1
-            print(contador)
             if V[iniciposicao]!=V[novaposicRamdom]:
                 # print("permutou    "+str(V[iniciposicao]))
                 # print("com    "+ str(V[novaposicRamdom]))
@@ -173,19 +171,22 @@ def embaralha(V,n,p):
     # print(V)
                 
 
-contador = 0
 
 def timeMe(func,V,n,m,p):
     w = 0
     global contador
     tempoarray = []
     while w<m :
+        contador+=1
         vsorted = list(V)
         embaralha(vsorted,n,p)
+        print(contador)
         start = T.process_time()
-        func(V,n)
+        func(vsorted,n)
         finish = T.process_time()
         tempoarray.append(finish-start)
+        contador+=1
+        print(contador)
     
         w+=1
     media = mediaT(tempoarray,m)
@@ -199,29 +200,37 @@ def timeMe(func,V,n,m,p):
 
 
 
+
+
+
 #experimento 1
 def callalgorithims(V,n,p):
     print("porcentagem "+str(p))
     vsorted = list(V)
     resultado = timeMe(bubble,vsorted,n,10,p)
     bublemedia.append(resultado[0])
-    bublevarianciamedia.append(resultado[1])
+    desviopadrao = math.sqrt(resultado[1])
+    bublevarianciamedia.append(desviopadrao)
     vsorted = list(V)
     resultado = timeMe(counting,vsorted,n,10,p)
     countingmedia.append(resultado[0])
-    countingvariancia.append(resultado[1])
+    desviopadrao = math.sqrt(resultado[1])
+    countingvariancia.append(desviopadrao)
     vsorted = list(V)
     resultado = timeMe(insertion,vsorted,n,10,p)
     insertionmedia.append(resultado[0])
+    desviopadrao = math.sqrt(desviopadrao)
     insertionvariancia.append(resultado[1])
     vsorted = list(V)
     resultado = timeMe(selection,vsorted,n,10,p)
     seleciotnmedia.append(resultado[0])
-    selectionvariancia.append(resultado[1])
+    desviopadrao = math.sqrt(resultado[1])
+    selectionvariancia.append(desviopadrao)
     vsorted = list(V)
     resultado = timeMe(sortPy,vsorted,n,10,p)
     sortpythonmedia.append(resultado[0])
-    sortpythonvariancia.append(resultado[1])
+    desviopadrao = math.sqrt(resultado[1])
+    sortpythonvariancia.append(desviopadrao)
   
 
 
@@ -240,7 +249,7 @@ countingvariancia = []
 bublemedia = []
 bublevarianciamedia =  []
 callalgorithims(V,n,0)
-n= 50
+n= 5000
 V = [random.randint(0,9999) for i in range(n)]
 callalgorithims(V,n,0)
 
@@ -281,6 +290,8 @@ def GraficaSortings(mpontos, mediaMCMPi, desvioMCMPi):
     plt.legend()
     plt.title(titulo)
     plt.savefig(nomegif)
+
+    plt.show()
     plt.clf()
     print("Olá mundo")
 
@@ -288,10 +299,10 @@ def GraficaSortings(mpontos, mediaMCMPi, desvioMCMPi):
 
 
 listamedias = [seleciotnmedia,bublemedia,countingmedia,insertionmedia,sortpythonmedia ]
-listavariancias = [selectionvariancia,bublevarianciamedia,countingvariancia,insertionvariancia,sortpythonvariancia]
+listadesviopadrao = [selectionvariancia,bublevarianciamedia,countingvariancia,insertionvariancia,sortpythonvariancia]
 algoritmos = ['Selection', 'Bubble', 'Counting', 'Insertion','timsort']
 
-GraficaSortings([[1000,5000,10000,50000,100000],[1000,5000,10000,50000,100000],[1000,5000,10000,50000,100000],[1000,5000,10000,50000,100000],[1000,5000,10000,50000,100000]], listamedias, listavariancias,)
+GraficaSortings([[1000,5000,10000,50000,100000],[1000,5000,10000,50000,100000],[1000,5000,10000,50000,100000],[1000,5000,10000,50000,100000],[1000,5000,10000,50000,100000]], listamedias, listadesviopadrao,)
 
 
 
@@ -301,34 +312,7 @@ GraficaSortings([[1000,5000,10000,50000,100000],[1000,5000,10000,50000,100000],[
 
 
 #experimento 2
-
-
-
-
-
-
-
-
-
-
-
-def callalgorithims2(V,n,p):
-    print("porcentagem "+str(p))
-    vsorted = list(V)
-    resultado = timeMe(bubble,vsorted,n,10,p)
-    bublemedia.append(resultado[0])
-    bublevarianciamedia.append(resultado[1])
-    vsorted = list(V)
-    resultado = timeMe(insertion,vsorted,n,10,p)
-    insertionmedia.append(resultado[0])
-    insertionvariancia.append(resultado[1])
-    vsorted = list(V)
-    resultado = timeMe(sortPy,vsorted,n,10,p)
-    sortpythonmedia.append(resultado[0])
-    sortpythonvariancia.append(resultado[1])
-
-
-
+'''
 sortpythonmedia = []
 sortpythonvariancia = []
 insertionmedia = []
@@ -336,22 +320,50 @@ insertionvariancia =  []
 bublemedia = []
 bublevarianciamedia =  []
 
+def callalgorithims2(V,n,p):
+    print("porcentagem "+str(p))
+    vsorted = list(V)
+    resultado = timeMe(sortPy,vsorted,n,10,p)
+    sortpythonmedia.append(resultado[0])
+    desviopadrao = math.sqrt(resultado[1])
+    sortpythonvariancia.append(desviopadrao)
+    vsorted = list(V)
+    resultado = timeMe(insertion,vsorted,n,10,p)
+    insertionmedia.append(resultado[0])
+    desviopadrao = math.sqrt(resultado[1])
+    insertionvariancia.append(desviopadrao)
+    vsorted = list(V)
+    resultado = timeMe(bubble,vsorted,n,10,p)
+    bublemedia.append(resultado[0])
+    desviopadrao = math.sqrt(resultado[1])
+    bublevarianciamedia.append(desviopadrao)
+    
+   
+
+
 
 nomegif = "exp2.png"
 titulo = "grafico de tempo levado de ordenação para cada algoritimo com p% desordenação"
 xtitulo  ="porcentagem de desordenação"
 n  = 100000
-V =[i for i in range(n)]
+V = [random.randint(0,9999) for i in range(n)]
+V.sort()
 callalgorithims2(V,n,1)
+
 callalgorithims2(V,n,3)
+
 callalgorithims2(V,n,5)
+
 callalgorithims2(V,n,10)
+
 callalgorithims2(V,n,50)
 listamedias = [bublemedia,insertionmedia,sortpythonmedia ]
-print(listamedias)
-listavariancias = [bublevarianciamedia,insertionvariancia,sortpythonvariancia]
+print("lista medias "+ str(listamedias))
+listadesviopadrao = [bublevarianciamedia,insertionvariancia,sortpythonvariancia]
+print("desivo padrao"+str(listadesviopadrao))
 algoritmos = [ 'Bubble', 'Insertion','timsort']
-GraficaSortings([[1,3,5,10,50],[1,3,5,10,50],[1,3,5,10,50]], listamedias, listavariancias,)
+GraficaSortings([[1,3,5,10,50],[1,3,5,10,50],[1,3,5,10,50]], listamedias, listadesviopadrao,)
+'''
 
 
 
