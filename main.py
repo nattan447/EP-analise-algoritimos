@@ -1,29 +1,4 @@
-#################################################################
- ## AO PREENCHER ESSE CABEC ¸ALHO COM O MEU NOME E O MEU N´ UMERO USP,
- ## DECLARO QUE SOU O ´ UNICO AUTOR E RESPONS´ AVEL POR ESSE PROGRAMA.
- ## TODAS AS PARTES ORIGINAIS DESSE EXERC´ ICIO PROGRAMA (EP) FORAM
- ## DESENVOLVIDAS E IMPLEMENTADAS POR MIM SEGUINDO AS INSTRUC¸~ OES
- ## DESSE EP E QUE PORTANTO N~ AO CONSTITUEM DESONESTIDADE ACAD^ EMICA
- ## OU PL´ AGIO.
- ## DECLARO TAMB´ EM QUE SOU RESPONS´ AVEL POR TODAS AS C´ OPIAS
- ## DESSE PROGRAMA E QUE EU N~ AO DISTRIBUI OU FACILITEI A
- ## SUA DISTRIBUIC ¸~ AO. ESTOU CIENTE QUE OS CASOS DE PL´ AGIO E
- ## DESONESTIDADE ACAD^ EMICA SER~ AO TRATADOS SEGUNDO OS CRIT´ ERIOS
- ## DIVULGADOS NA P´ AGINA DA DISCIPLINA.
- ## ENTENDO QUE EPS SEM ESTE CABEC ¸ALHO N~ AO SER~ AO CORRIGIDOS E,
- ## AINDA ASSIM, PODER~ AO SER PUNIDOS POR DESONESTIDADE ACAD^ EMICA.
- ## Nome : Nattan ferreira da Silva
- ## NUSP : 15520641
- ## Turma: bcc
- ## Prof.: Roberto Hirata Jr.
- ## Refer^ encias: Com exce¸c~ ao das rotinas fornecidas no enunciado
- ## e em sala de aula, caso voc^e tenha utilizado alguma ref^ encia,
- ## liste-as abaixo para que o seu programa n~ ao seja considerado
- ## pl´ agio ou irregular.
- ## Exemplo:
- ##- O algoritmo Quicksort foi baseado em
- ## http://wiki.python.org.br/QuickSort
- #################################################################
+
 
 
 
